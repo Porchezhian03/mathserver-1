@@ -29,111 +29,118 @@ Create a HTML file to implement form based input and output.
 Publish the website in the given URL.
 
 # PROGRAM :
-math.html
 ```
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset='utf-8'>
-<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-<title>Power Of a Lamp Filament</title>
-<meta name='viewport' content='width=device-width, initial-scale=1'>
-<style type="text/css">
-body {
-    background-color: rgb(0, 0, 0);
-}
-.edge {
-    width: 100%;
-    padding-top: 250px;
-    text-align: center;
-}
-.box {
-    display: inline-block;
-    border: thick dashed rgb(116, 8, 98);
-    width: 500px;
-    min-height: 300px;
-    font-size: 20px;
-    background-color: rgb(9, 213, 240);
-}
-.formelt {
-    color: black;
-    text-align: center;
-    margin-top: 7px;
-    margin-bottom: 6px;
-}
-h1 {
-    color: black;
-    padding-top: 20px;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lamp Filament Power Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: url("Screenshot 2024-10-28 115234.png");
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 90px auto;
+            padding: 20px;
+            background-color: cyan;
+            box-shadow: 0 0 10px rgb(0, 0, 0);
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: black;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            color: rgb(117, 125, 239);
+            margin-bottom: 5px;
+        }
+
+        input[type="number"] {
+            width: 90%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #f4f0d2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-<div class="edge">
-    <div class="box">
-        <h1>power of a lamp filament </h1>
-        <h3>ABIRAMI (24900822)</h3>
-        <form method="POST">
-            {% csrf_token %}
-            <div class="formelt">
-                Intensity: <input type="text" name="intensity" value="{{i}}">m<br/>
-            </div>
-            <div class="formelt">
-                Resistance: <input type="text" name="resistance" value="{{r}}">m<br/>
-            </div>
-            <div class="formelt">
-                <input type="submit" value="Calculate"><br/>
-            </div>
-            <div class="formelt">
-                Power: <input type="text" name="power" value="{{power}}">m<sup>2</sup><br/>
-            </div>
-        </form>
+    <div class="container">
+        <h1>Lamp Filament Power Calculator</h1>
+        <div class="input-group">
+            <label for="current">Current (I) in Amps:</label>
+            <input type="number" id="current" placeholder="Enter current (in Amps)" required>
+        </div>
+        <div class="input-group">
+            <label for="resistance">Resistance (R) in Ohms:</label>
+            <input type="number" id="resistance" placeholder="Enter resistance (in Ohms)" required>
+        </div>
+        <button onclick="calculatePower()">Calculate Power</button>
+        <div class="result" id="result"></div>
     </div>
-</div>
+
+    <script>
+        function calculatePower() {
+            var current = document.getElementById('current').value;
+            var resistance = document.getElementById('resistance').value;
+            if (current && resistance) {
+                var power = Math.pow(current, 2) * resistance;
+                document.getElementById('result').innerHTML = 'Power (P) = ' + power.toFixed(2) + ' Watts';
+            } else {
+                document.getElementById('result').innerHTML = 'Please enter valid values for current and resistance.';
+            }
+        }
+    </script>
 </body>
 </html>
-```
-urls.py
-```
-from django.contrib import admin
-from django.urls import path
-from mathapp import views
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('power/',views.power,name="power"),
-    path('',views.power,name="power")
-]
-```
-views.py
-```
-from django.shortcuts import render
-def power(request):
-    context = {}
-    context['power'] = "0"
-    context['i'] = "0"
-    context['r'] = "0"
-    if request.method == 'POST':
-        print("POST method is used")
-        print('request.POST:', request.POST)
-        i = request.POST.get('intensity', '0') 
-        r = request.POST.get('resistance', '0') 
-        print('intensity =', i)
-        print('resistance =', r)
-        power =  int(i) * int(i) * int(r)
-        context['power'] = power
-        context['i'] = i
-        context['r'] = r
-        print('Power =', power)
-    
-    return render(request, 'mathapp/math.html',context)
-```
 
+```
 # SERVER SIDE PROCESSING:
+![ChatGPT Image Apr 12, 2025, 12_13_30 AM](https://github.com/user-attachments/assets/f74bcb07-8662-4d6d-87ca-92318a35f432)
 
-![alt text](<Screenshot 2025-04-24 235517.png>)
+
+
 
 # HOMEPAGE:
+![Screenshot (80)](https://github.com/user-attachments/assets/f4a87abf-e297-494e-bb2e-ba0775147f8e)
+![Screenshot (86)](https://github.com/user-attachments/assets/15e9e850-62ee-4f5c-8dc3-a0ee918dd439)
 
-![alt text](<Screenshot 2025-04-24 235400.png>)
+
 
 # RESULT:
 The program for performing server side processing is completed successfully.
